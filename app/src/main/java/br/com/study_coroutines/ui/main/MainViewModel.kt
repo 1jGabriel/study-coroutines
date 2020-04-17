@@ -12,13 +12,8 @@ class MainViewModel(private val charactersUseCase: GetCharactersUseCase) : ViewM
             val result = charactersUseCase.execute()
             when (result.status) {
                 Status.SUCCESS -> {
-                    println(result.data)
                 }
                 Status.ERROR -> {
-                    println(result.message)
-                }
-                Status.LOADING -> {
-                    println(result.status)
                 }
             }
         }
