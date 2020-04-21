@@ -1,6 +1,6 @@
 package br.com.study_coroutines.data
 
-import br.com.study_coroutines.data.model.toDomainModel
+import br.com.study_coroutines.data.model.toCharacters
 import br.com.study_coroutines.data.retrofit.RickNMortyApi
 import br.com.study_coroutines.domain.repository.CharacterRepository
 import br.com.study_coroutines.network.Resource
@@ -13,7 +13,7 @@ class CharacterRepositoryImpl(
     override suspend fun getCharacters() = withContext(Dispatchers.IO) {
         try {
             val result = api.getCharacters()
-            Resource.Success(result.toDomainModel())
+            Resource.Success(result.toCharacters())
         } catch (e: Exception) {
             Resource.Error(e)
         }

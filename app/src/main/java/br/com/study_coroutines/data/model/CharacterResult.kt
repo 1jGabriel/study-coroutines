@@ -1,6 +1,6 @@
 package br.com.study_coroutines.data.model
 
-import br.com.study_coroutines.domain.model.CharacterDomainModel
+import br.com.study_coroutines.domain.model.Character
 import com.squareup.moshi.Json
 
 data class CharacterResult(
@@ -49,8 +49,8 @@ data class CharacterResult(
     }
 }
 
-fun CharacterResult.toDomainModel(): List<CharacterDomainModel> {
+fun CharacterResult.toCharacters(): List<Character> {
     return this.results?.map {
-        CharacterDomainModel(it.id, it.image, it.name)
+        Character(it.id, it.image, it.name)
     } ?: listOf()
 }
