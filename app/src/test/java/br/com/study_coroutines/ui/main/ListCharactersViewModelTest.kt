@@ -5,6 +5,7 @@ import br.com.study_coroutines.domain.model.Character
 import br.com.study_coroutines.domain.usecase.GetCharactersUseCase
 import br.com.study_coroutines.network.Resource
 import br.com.study_coroutines.ui.ViewAction
+import br.com.study_coroutines.ui.list.ListCharactersViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -18,12 +19,12 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class MainViewModelTest {
+class ListCharactersViewModelTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var mainViewModel: MainViewModel
+    lateinit var listCharactersViewModel: ListCharactersViewModel
 
     private var useCase = mockk<GetCharactersUseCase>()
     private var successResponse = Resource.Success<List<Character>>(listOf())
@@ -32,16 +33,16 @@ class MainViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(Dispatchers.Unconfined )
-        mainViewModel = MainViewModel(useCase)
+        listCharactersViewModel = ListCharactersViewModel(useCase)
     }
 
     @Test
     fun `should show error true when call Init dispatch action `() {
         coEvery { useCase.execute() } returns Resource.Error(errorResponse)
-        mainViewModel.dispatchAction(ViewAction.Init)
+        listCharactersViewModel.dispatchAction(ViewAction.Init)
         coVerify { useCase.execute() }
 
-        Assert.assertEquals(mainViewModel.viewState.isError.value, true)
+        Assert.assertEquals(listCharactersViewModel.viewState.isError.value, true)
     }
 
     @Test
@@ -50,8 +51,8 @@ class MainViewModelTest {
             useCase.execute()
         }
         coEvery { useCase.execute() } returns successResponse
-        mainViewModel.dispatchAction(ViewAction.Init)
+        listCharactersViewModel.dispatchAction(ViewAction.Init)
         coVerify { useCase.execute() }
-        Assert.assertEquals(successResponse.data, mainViewModel.viewState.characters.value)
+        Assert.assertEquals(successResponse.data, listCharactersViewModel.viewState.characters.value)
     }
 }

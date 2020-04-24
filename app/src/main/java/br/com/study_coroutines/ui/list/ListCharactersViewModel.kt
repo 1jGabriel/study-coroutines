@@ -1,13 +1,14 @@
-package br.com.study_coroutines.ui.main
+package br.com.study_coroutines.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.study_coroutines.domain.usecase.GetCharactersUseCase
 import br.com.study_coroutines.network.Status
 import br.com.study_coroutines.ui.ViewAction
+import br.com.study_coroutines.ui.main.ViewState
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val charactersUseCase: GetCharactersUseCase) : ViewModel() {
+class ListCharactersViewModel(private val charactersUseCase: GetCharactersUseCase) : ViewModel() {
 
     val viewState = ViewState()
 

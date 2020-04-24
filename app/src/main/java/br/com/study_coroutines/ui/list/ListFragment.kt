@@ -1,4 +1,4 @@
-package br.com.study_coroutines.ui.main
+package br.com.study_coroutines.ui.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import br.com.study_coroutines.databinding.ListFragmentBinding
 import br.com.study_coroutines.domain.model.Character
 import br.com.study_coroutines.ui.ViewAction
@@ -15,7 +16,7 @@ import org.koin.android.ext.android.inject
 
 class ListFragment : Fragment(), GenericAdapter.AppAdapterListener<Character> {
 
-    private val viewModel: MainViewModel by inject()
+    private val viewModel: ListCharactersViewModel by inject()
     private lateinit var binding: ListFragmentBinding
 
     override fun onCreateView(
@@ -38,6 +39,8 @@ class ListFragment : Fragment(), GenericAdapter.AppAdapterListener<Character> {
     }
 
     override fun onItemClick(model: Character, position: Int) {
-        Toast.makeText(requireContext(), model.id.toString(), Toast.LENGTH_SHORT).show()
+        val action = ListFragmentDirections.actionToDetail()
+        action.characterId = model.id
+        Navigation.findNavController(binding.root).navigate(action)
     }
 }

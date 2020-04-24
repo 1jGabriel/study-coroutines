@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listFragment">
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="br.com.study_coroutines.ui.list.ListFragment"
+        android:label="ListFragment">
+        <action
+            android:id="@+id/actionToDetail"
+            app:destination="@id/detailFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="br.com.study_coroutines.ui.detail.DetailFragment"
+        android:label="DetailFragment">
+        <action
+            android:id="@+id/actionToList"
+            app:destination="@id/listFragment" />
+
+        <argument
+            android:name="characterId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+</navigation>
