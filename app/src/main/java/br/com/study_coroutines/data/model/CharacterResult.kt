@@ -5,9 +5,9 @@ import com.squareup.moshi.Json
 
 data class CharacterResult(
     @field:Json(name = "results")
-    val results: List<Result>? = listOf()
+    val characters: List<Character>? = listOf()
 ) {
-    data class Result(
+    data class Character(
         @field:Json(name = "created")
         val created: String = "",
         @field:Json(name = "episode")
@@ -50,7 +50,9 @@ data class CharacterResult(
 }
 
 fun CharacterResult.toCharacters(): List<Character> {
-    return this.results?.map {
+    return this.characters?.map {
         Character(it.id, it.image, it.name)
     } ?: listOf()
 }
+
+fun Character.toCharacter() = Character(id, image, name)

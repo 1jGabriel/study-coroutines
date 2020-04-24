@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel { ListCharactersViewModel(get()) }
-    viewModel { DetailViewModel() }
+    viewModel { DetailViewModel(get()) }
     factory<CharacterRepository> { CharacterRepositoryImpl(get()) }
     factory { GetCharactersUseCase(get()) }
 }

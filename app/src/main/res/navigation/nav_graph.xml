@@ -24,5 +24,9 @@
             android:name="characterId"
             android:defaultValue="0"
             app:argType="integer" />
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="https://testes.testes" />
     </fragment>
 </navigation>
