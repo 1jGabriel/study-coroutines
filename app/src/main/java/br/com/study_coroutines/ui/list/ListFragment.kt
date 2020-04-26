@@ -9,11 +9,12 @@ import androidx.navigation.Navigation
 import br.com.study_coroutines.databinding.ListFragmentBinding
 import br.com.study_coroutines.domain.model.Character
 import br.com.study_coroutines.ui.ViewAction
-import br.com.study_coroutines.ui.adapter.GenericAdapter
+import br.com.study_coroutines.ui.adapter.AdapterObject
+import br.com.study_coroutines.ui.model.AppAdapterListener
 import kotlinx.android.synthetic.main.list_fragment.*
 import org.koin.android.ext.android.inject
 
-class ListFragment : Fragment(), GenericAdapter.AppAdapterListener<Character> {
+class ListFragment : Fragment(), AppAdapterListener<AdapterObject> {
 
     private val viewModel: ListCharactersViewModel by inject()
     private lateinit var binding: ListFragmentBinding
@@ -23,6 +24,7 @@ class ListFragment : Fragment(), GenericAdapter.AppAdapterListener<Character> {
         savedInstanceState: Bundle?
     ) = ListFragmentBinding.inflate(inflater, container, false).apply {
         binding = this
+        clickListener = this@ListFragment
         viewState = viewModel.viewState
         lifecycleOwner = viewLifecycleOwner
     }.root
@@ -35,11 +37,13 @@ class ListFragment : Fragment(), GenericAdapter.AppAdapterListener<Character> {
             viewModel.dispatchAction(ViewAction.Refresh)
             swipe.isRefreshing = false
         }
+
+        binding.clickListener = this
     }
 
-    override fun onItemClick(model: Character, position: Int) {
+    override fun onItemClick(model: AdapterObject, position: Int) {
         val action = ListFragmentDirections.actionToDetail()
-        action.characterId = model.id
+        action.characterId = (model as Character).id
         Navigation.findNavController(binding.root).navigate(action)
     }
 }
