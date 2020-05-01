@@ -10,8 +10,8 @@
             type="br.com.study_coroutines.ui.main.ViewState" />
 
         <variable
-            name="clickListener"
-            type="br.com.study_coroutines.ui.model.AppAdapterListener" />
+            name="adapter"
+            type="br.com.study_coroutines.ui.adapter.GenericAdapter" />
 
     </data>
 
@@ -55,7 +55,6 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:visibility="visible"
-                app:clickListener="@{clickListener}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -10,21 +10,21 @@ import br.com.study_coroutines.databinding.ListFragmentBinding
 import br.com.study_coroutines.domain.model.Character
 import br.com.study_coroutines.ui.ViewAction
 import br.com.study_coroutines.ui.adapter.AdapterObject
-import br.com.study_coroutines.ui.model.AppAdapterListener
+import br.com.study_coroutines.ui.model.AdapterClickListener
 import kotlinx.android.synthetic.main.list_fragment.*
 import org.koin.android.ext.android.inject
 
-class ListFragment : Fragment(), AppAdapterListener<AdapterObject> {
+class ListFragment : Fragment(), AdapterClickListener<AdapterObject> {
 
     private val viewModel: ListCharactersViewModel by inject()
     private lateinit var binding: ListFragmentBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = ListFragmentBinding.inflate(inflater, container, false).apply {
         binding = this
-        clickListener = this@ListFragment
         viewState = viewModel.viewState
         lifecycleOwner = viewLifecycleOwner
     }.root
@@ -37,8 +37,6 @@ class ListFragment : Fragment(), AppAdapterListener<AdapterObject> {
             viewModel.dispatchAction(ViewAction.Refresh)
             swipe.isRefreshing = false
         }
-
-        binding.clickListener = this
     }
 
     override fun onItemClick(model: AdapterObject, position: Int) {

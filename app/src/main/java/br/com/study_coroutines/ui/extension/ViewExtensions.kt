@@ -8,7 +8,6 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.com.study_coroutines.ui.adapter.AdapterObject
 import br.com.study_coroutines.ui.adapter.GenericAdapter
-import br.com.study_coroutines.ui.model.AppAdapterListener
 import com.bumptech.glide.Glide
 
 @BindingAdapter("app:visible")
@@ -21,9 +20,9 @@ fun SwipeRefreshLayout.refresh(lmbd: (() -> Unit)) {
     this.setOnRefreshListener { lmbd.invoke() }
 }
 
-@BindingAdapter(value = ["app:list", "app:listener"])
-fun RecyclerView.setupAdapter(list: List<AdapterObject>, listener: AppAdapterListener<AdapterObject>?) {
-    this.adapter = GenericAdapter(list, listener)
+@BindingAdapter("app:list")
+fun RecyclerView.setupAdapter(list: List<AdapterObject>) {
+    this.adapter = GenericAdapter(mList = list)
 }
 
 @BindingAdapter("android:imageUrl")

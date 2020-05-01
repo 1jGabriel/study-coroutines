@@ -6,17 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.RecyclerView
-import br.com.study_coroutines.ui.model.AppAdapterListener
+import br.com.study_coroutines.ui.model.AdapterClickListener
 
-class GenericAdapter<T : AdapterObject>(var mList: List<T>, var listener: AppAdapterListener<T>?) :
-    RecyclerView.Adapter<GenericAdapter<T>.ViewHolder<ViewDataBinding>>() {
+class GenericAdapter<T : AdapterObject>(
+    var mList: List<T> = emptyList(),
+    var listener: AdapterClickListener<T>? = null
+) : RecyclerView.Adapter<GenericAdapter<T>.ViewHolder<ViewDataBinding>>() {
 
-    private var searchList : List<T>
-
-    init {
-        searchList = mList
-
-    }
+    private var searchList: List<T> = mList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ViewDataBinding> {
         val bind: ViewDataBinding =

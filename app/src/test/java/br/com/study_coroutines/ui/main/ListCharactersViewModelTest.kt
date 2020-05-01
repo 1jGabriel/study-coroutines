@@ -24,7 +24,7 @@ class ListCharactersViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var listCharactersViewModel: ListCharactersViewModel
+    private lateinit var listCharactersViewModel: ListCharactersViewModel
 
     private var useCase = mockk<GetCharactersUseCase>()
     private var successResponse = Resource.Success<List<Character>>(listOf())
@@ -32,7 +32,7 @@ class ListCharactersViewModelTest {
 
     @Before
     fun setup() {
-        Dispatchers.setMain(Dispatchers.Unconfined )
+        Dispatchers.setMain(Dispatchers.Unconfined)
         listCharactersViewModel = ListCharactersViewModel(useCase)
     }
 

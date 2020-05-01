@@ -13,7 +13,8 @@ class DetailFragment : Fragment() {
     private var characterId: Int = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = DetailFragmentBinding.inflate(inflater, container, false).apply {
         lifecycleOwner = viewLifecycleOwner
