@@ -2,6 +2,7 @@ package br.com.study_coroutines.di
 
 import br.com.study_coroutines.data.CharacterRepositoryImpl
 import br.com.study_coroutines.domain.repository.CharacterRepository
+import br.com.study_coroutines.domain.usecase.GetCharactersByIdUseCase
 import br.com.study_coroutines.domain.usecase.GetCharactersUseCase
 import br.com.study_coroutines.ui.detail.DetailViewModel
 import br.com.study_coroutines.ui.list.ListCharactersViewModel
@@ -13,4 +14,5 @@ val appModule = module {
     viewModel { DetailViewModel(get()) }
     factory<CharacterRepository> { CharacterRepositoryImpl(get()) }
     factory { GetCharactersUseCase(get()) }
+    factory { GetCharactersByIdUseCase(get()) }
 }

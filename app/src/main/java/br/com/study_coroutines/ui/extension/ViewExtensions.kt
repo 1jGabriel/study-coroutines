@@ -22,7 +22,10 @@ fun SwipeRefreshLayout.refresh(lmbd: (() -> Unit)) {
 
 @BindingAdapter("app:list")
 fun RecyclerView.setupAdapter(list: List<AdapterObject>) {
-    this.adapter = GenericAdapter(mList = list)
+    if (this.adapter is GenericAdapter<*>) {
+        (this.adapter as GenericAdapter<AdapterObject>).mList = list
+        (this.adapter as GenericAdapter<AdapterObject>).notifyDataSetChanged()
+    }
 }
 
 @BindingAdapter("android:imageUrl")

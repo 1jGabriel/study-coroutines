@@ -9,12 +9,12 @@ import androidx.navigation.Navigation
 import br.com.study_coroutines.databinding.ListFragmentBinding
 import br.com.study_coroutines.domain.model.Character
 import br.com.study_coroutines.ui.ViewAction
-import br.com.study_coroutines.ui.adapter.AdapterObject
+import br.com.study_coroutines.ui.adapter.GenericAdapter
 import br.com.study_coroutines.ui.model.AdapterClickListener
 import kotlinx.android.synthetic.main.list_fragment.*
 import org.koin.android.ext.android.inject
 
-class ListFragment : Fragment(), AdapterClickListener<AdapterObject> {
+class ListFragment : Fragment(), AdapterClickListener<Character> {
 
     private val viewModel: ListCharactersViewModel by inject()
     private lateinit var binding: ListFragmentBinding
@@ -31,6 +31,9 @@ class ListFragment : Fragment(), AdapterClickListener<AdapterObject> {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val adapter = GenericAdapter(emptyList(), this@ListFragment)
+        binding.recyclerView.adapter = adapter
         viewModel.dispatchAction(ViewAction.Init)
 
         swipe.setOnRefreshListener {
@@ -39,9 +42,9 @@ class ListFragment : Fragment(), AdapterClickListener<AdapterObject> {
         }
     }
 
-    override fun onItemClick(model: AdapterObject, position: Int) {
+    override fun onItemClick(model: Character, position: Int) {
         val action = ListFragmentDirections.actionToDetail()
-        action.characterId = (model as Character).id
+        action.characterId = model.id
         Navigation.findNavController(binding.root).navigate(action)
     }
 }

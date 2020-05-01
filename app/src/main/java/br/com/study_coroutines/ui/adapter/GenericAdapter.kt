@@ -13,8 +13,6 @@ class GenericAdapter<T : AdapterObject>(
     var listener: AdapterClickListener<T>? = null
 ) : RecyclerView.Adapter<GenericAdapter<T>.ViewHolder<ViewDataBinding>>() {
 
-    private var searchList: List<T> = mList
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ViewDataBinding> {
         val bind: ViewDataBinding =
             DataBindingUtil.bind(LayoutInflater.from(parent.context).inflate(viewType, parent, false))!!
@@ -22,7 +20,7 @@ class GenericAdapter<T : AdapterObject>(
     }
 
     override fun onBindViewHolder(holder: ViewHolder<ViewDataBinding>, position: Int) {
-        val model: T = searchList[position]
+        val model: T = mList[position]
         holder.getBinding().setVariable(BR.model, model)
         holder.getBinding().executePendingBindings()
 
@@ -32,11 +30,11 @@ class GenericAdapter<T : AdapterObject>(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return searchList[position].layoutId()
+        return mList[position].layoutId()
     }
 
     override fun getItemCount(): Int {
-        return searchList.size
+        return mList.size
     }
 
     inner class ViewHolder<V : ViewDataBinding>(private val view: V) : RecyclerView.ViewHolder(view.root) {
