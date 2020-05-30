@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val networkModule = module {
     single { provideDefaultOkhttpClient() }
-    single { provideRetrofit(get()) }
+    single { provideRetrofit(client = get()) }
     single { provideApi(get()) }
 }
 

@@ -11,9 +11,9 @@ import kotlinx.coroutines.withContext
 class CharacterRepositoryImpl(
     private val api: RickNMortyApi
 ) : CharacterRepository {
-    override suspend fun getCharacters() = withContext(Dispatchers.IO) {
+    override suspend fun getCharacters(page: Int) = withContext(Dispatchers.IO) {
         try {
-            val result = api.getCharacters()
+            val result = api.getCharacters(page)
             Resource.Success(result.toCharacters())
         } catch (e: Exception) {
             Resource.Error(e)
