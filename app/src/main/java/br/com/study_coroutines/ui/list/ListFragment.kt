@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import br.com.study_coroutines.databinding.ListFragmentBinding
-import br.com.study_coroutines.domain.model.Character
 import br.com.study_coroutines.ui.adapter.PersonagesAdapter
 import br.com.study_coroutines.ui.model.AdapterClickListener
+import br.com.study_coroutines.ui.model.CharacterUi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.ext.android.inject
 
-class ListFragment : Fragment(), AdapterClickListener<Character> {
+class ListFragment : Fragment(), AdapterClickListener<CharacterUi> {
 
     private val viewModel: ListCharactersViewModel by inject()
     private lateinit var binding: ListFragmentBinding
@@ -32,7 +32,7 @@ class ListFragment : Fragment(), AdapterClickListener<Character> {
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = PersonagesAdapter()
+        val adapter = PersonagesAdapter(this@ListFragment)
         binding.recyclerView.adapter = adapter
 
         lifecycleScope.launchWhenCreated {
@@ -51,9 +51,10 @@ class ListFragment : Fragment(), AdapterClickListener<Character> {
         // }
     }
 
-    override fun onItemClick(model: Character, position: Int) {
-        val action = ListFragmentDirections.actionToDetail()
-        action.characterId = model.id
-        Navigation.findNavController(binding.root).navigate(action)
+    override fun onItemClick(model: CharacterUi, position: Int) {
+        Toast.makeText(requireContext(), model.name, Toast.LENGTH_LONG).show()
+        // val action = ListFragmentDirections.actionToDetail()
+        // action.characterId = model.id
+        // Navigation.findNavController(binding.root).navigate(action)
     }
 }

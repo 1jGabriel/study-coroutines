@@ -17,7 +17,7 @@ class ListCharactersViewModel(private val repository: CharacterRepository) : Vie
         PagingConfig(
             pageSize = 20,
             enablePlaceholders = true,
-            maxSize = 200
+            maxSize = 100
         )
     ){
         PersonageDataSource(repository)

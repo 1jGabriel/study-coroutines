@@ -17,7 +17,7 @@ class PersonageDataSource(
             Page(
                 data = data ?: emptyList(),
                 prevKey = params.key,
-                nextKey = params.key?.plus(1)
+                nextKey = params.key?.plus(1) ?: 2
             )
         } catch (e: IOException) {
             LoadResult.Error(e)
