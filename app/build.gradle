@@ -74,7 +74,9 @@ dependencies {
 
     implementation "com.google.android.material:material:1.1.0"
 
-    implementation 'android.arch.paging:runtime:1.0.1'
+    def paging_version = "3.0.0-alpha01"
+
+    implementation "androidx.paging:paging-runtime:$paging_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
 
     implementation "com.squareup.okhttp3:logging-interceptor:4.3.1"
