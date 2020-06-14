@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import br.com.study_coroutines.databinding.ListFragmentBinding
 import br.com.study_coroutines.ui.adapter.PersonagesAdapter
+import br.com.study_coroutines.ui.adapter.PersonagesLoadStateAdapter
 import br.com.study_coroutines.ui.model.AdapterClickListener
 import br.com.study_coroutines.ui.model.CharacterUi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,6 +20,9 @@ class ListFragment : Fragment(), AdapterClickListener<CharacterUi> {
 
     private val viewModel: ListCharactersViewModel by inject()
     private lateinit var binding: ListFragmentBinding
+    private val adapter: PersonagesAdapter by lazy {
+        PersonagesAdapter(this@ListFragment)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +33,19 @@ class ListFragment : Fragment(), AdapterClickListener<CharacterUi> {
         lifecycleOwner = viewLifecycleOwner
     }.root
 
+    private fun setupAdapter() {
+        binding.recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = PersonagesLoadStateAdapter { adapter.retry() },
+            footer = PersonagesLoadStateAdapter { adapter.retry() }
+        )
+    }
+
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = PersonagesAdapter(this@ListFragment)
-        binding.recyclerView.adapter = adapter
-
+        setupAdapter()
         lifecycleScope.launchWhenCreated {
-            viewModel.allPersonages.collectLatest {
+            viewModel.getCharacters().collectLatest {
                 adapter.submitData(it)
             }
         }

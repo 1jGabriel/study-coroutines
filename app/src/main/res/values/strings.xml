@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">study-coroutines</string>
+    <string name="retry_text">Tentar novamente</string>
 </resources>
