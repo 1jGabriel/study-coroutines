@@ -1,11 +1,16 @@
 package br.com.study_coroutines.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import br.com.study_coroutines.data.model.toCharacters
 import br.com.study_coroutines.data.retrofit.RickNMortyApi
 import br.com.study_coroutines.domain.model.Character
 import br.com.study_coroutines.domain.repository.CharacterRepository
 import br.com.study_coroutines.network.Resource
+import br.com.study_coroutines.ui.model.CharacterUi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class CharacterRepositoryImpl(
@@ -27,5 +32,12 @@ class CharacterRepositoryImpl(
         } catch (e: Exception) {
             Resource.Error(e)
         }
+    }
+
+    override fun getCharactersPager(): Flow<PagingData<CharacterUi>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, maxSize = 500),
+            pagingSourceFactory = { PersonageDataSource(api) }
+        ).flow
     }
 }

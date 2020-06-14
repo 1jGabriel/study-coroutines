@@ -1,20 +1,16 @@
 package br.com.study_coroutines.ui.list
 
 import androidx.lifecycle.ViewModel
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import br.com.study_coroutines.data.PersonageDataSource
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import br.com.study_coroutines.domain.repository.CharacterRepository
+import br.com.study_coroutines.ui.model.CharacterUi
+import kotlinx.coroutines.flow.Flow
 
 class ListCharactersViewModel(private val repository: CharacterRepository) : ViewModel() {
 
-    val allPersonages = Pager(
-        PagingConfig(
-            pageSize = 20,
-            enablePlaceholders = true,
-            maxSize = 100
-        )
-    ) {
-        PersonageDataSource(repository)
-    }.flow
+    fun getCharacters(): Flow<PagingData<CharacterUi>> {
+        return repository.getCharactersPager().cachedIn(viewModelScope)
+    }
 }
