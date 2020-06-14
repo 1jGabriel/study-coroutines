@@ -8,7 +8,7 @@
         android:name="br.com.study_coroutines.ui.list.ListFragment"
         android:label="ListFragment">
         <action
-            android:id="@+id/actionToDetail"
+            android:id="@+id/call_detail"
             app:destination="@id/detailFragment" />
 
     </fragment>

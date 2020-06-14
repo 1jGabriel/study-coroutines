@@ -25,15 +25,21 @@ class PersonagesAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         getItem(position)?.let {
             holder.bind(it)
-            clickAction.onItemClick(it, position)
         }
     }
 
-    class MyViewHolder(itemView: View, clickAction: AdapterClickListener<CharacterUi>) : RecyclerView.ViewHolder
-        (itemView) {
+    class MyViewHolder(
+        itemView: View,
+        val clickAction: AdapterClickListener<CharacterUi>
+    ) : RecyclerView.ViewHolder(itemView) {
+
         fun bind(character: CharacterUi) {
+
             itemView.name.text = character.name
             itemView.imageView.loadImage(character.image)
+            itemView.setOnClickListener {
+                clickAction.onItemClick(character)
+            }
         }
     }
 }
@@ -44,6 +50,6 @@ class DiffUtilCallBack : DiffUtil.ItemCallback<CharacterUi>() {
     }
 
     override fun areContentsTheSame(oldItem: CharacterUi, newItem: CharacterUi): Boolean {
-        return oldItem == newItem
+        return oldItem.equals(newItem)
     }
 }

@@ -25,7 +25,7 @@ class GenericAdapter<T : AdapterObject>(
         holder.getBinding().executePendingBindings()
 
         holder.getBinding().root.setOnClickListener {
-            listener?.onItemClick(model, position)
+            listener?.onItemClick(model)
         }
     }
 

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import br.com.study_coroutines.databinding.ListFragmentBinding
 import br.com.study_coroutines.ui.adapter.PersonagesAdapter
 import br.com.study_coroutines.ui.adapter.PersonagesLoadStateAdapter
@@ -20,9 +20,7 @@ class ListFragment : Fragment(), AdapterClickListener<CharacterUi> {
 
     private val viewModel: ListCharactersViewModel by inject()
     private lateinit var binding: ListFragmentBinding
-    private val adapter: PersonagesAdapter by lazy {
-        PersonagesAdapter(this@ListFragment)
-    }
+    private lateinit var adapter: PersonagesAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +32,7 @@ class ListFragment : Fragment(), AdapterClickListener<CharacterUi> {
     }.root
 
     private fun setupAdapter() {
+        adapter = PersonagesAdapter(this@ListFragment)
         binding.recyclerView.adapter = adapter.withLoadStateHeaderAndFooter(
             header = PersonagesLoadStateAdapter { adapter.retry() },
             footer = PersonagesLoadStateAdapter { adapter.retry() }
@@ -49,21 +48,16 @@ class ListFragment : Fragment(), AdapterClickListener<CharacterUi> {
                 adapter.submitData(it)
             }
         }
-        // viewModel.getPosts().observe(viewLifecycleOwner, Observer {
-        //     adapter.submitList(it)
-        // })
-        // viewModel.dispatchAction(ViewAction.Init)
-        //
-        // swipe.setOnRefreshListener {
-        //     viewModel.dispatchAction(ViewAction.Refresh)
-        //     swipe.isRefreshing = false
-        // }
+
+        binding.swipe.setOnRefreshListener {
+            adapter.refresh()
+            binding.swipe.isRefreshing = false
+        }
     }
 
-    override fun onItemClick(model: CharacterUi, position: Int) {
-        Toast.makeText(requireContext(), model.name, Toast.LENGTH_LONG).show()
-        // val action = ListFragmentDirections.actionToDetail()
-        // action.characterId = model.id
-        // Navigation.findNavController(binding.root).navigate(action)
+    override fun onItemClick(model: CharacterUi) {
+        val action = ListFragmentDirections.callDetail()
+        action.characterId = model.id
+        Navigation.findNavController(binding.root).navigate(action)
     }
 }
