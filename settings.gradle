@@ -1,2 +1,2 @@
-rootProject.name='study-coroutines'
+rootProject.name='paging-compose'
 include ':app'
