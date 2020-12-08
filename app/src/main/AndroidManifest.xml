@@ -16,7 +16,7 @@
         <activity
             android:name="br.com.pagingcompose.ui.CharactersActivity"
             android:label="@string/title_activity_characters"
-            android:theme="@style/Theme.PagingCompose">
+            android:theme="@style/Theme.PagingCompose.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
